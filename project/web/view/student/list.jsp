@@ -13,7 +13,7 @@
         <title>JSP Page</title>
         <script>
             function deleteEmp(id) {
-                var result = confirm('are you sure?');
+                var result = confirm('Are you sure?');
                 if (result) {
                     window.location.href = 'remove?id=' + id;
                 }
@@ -21,31 +21,23 @@
         </script>
     </head>
     <body>
-        <table>
+        <table border='1px'>
             <tr> 
                 <td>ID</td>
                 <td>Name</td>
-                <td></td>
+                <td>Actions</td>
             </tr>
             <c:forEach items="${requestScope.student}" var="s">
                 <tr>
-                <td> $s.id</td>
-                <td href="detail.jsp?id='${s.id}'"> ${s.name}</td>
-                <td>
-                        <input type="button" value="Update" onclick="window.location.href = 'update?id=${e.id}'"/>
-                        <input type="button" value="Remove" onclick="deleteEmp(${e.id})"/>
-                </td>
-                
-                
-                
+                    <td>${s.id}</td>
+                    <td><a href="detail.jsp?id=${s.id}">${s.name}</a></td>
+                    <td>
+                        <input type="button" value="Update" onclick="window.location.href = 'update?id=${s.id}'"/>
+                        <input type="button" value="Remove" onclick="deleteEmp(${s.id})"/>
+                    </td>
                 </tr>
             </c:forEach>
-            
-            
-            
         </table>
         <a href="create">Create</a>
-        
-        
     </body>
 </html>

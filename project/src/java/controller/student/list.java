@@ -34,8 +34,7 @@ public class list extends HttpServlet {
         ArrayList<Student> students = db.list();
         
         request.setAttribute("student", students);
-        request.getRequestDispatcher("view/student/list.jsp").forward(request, response);
-        
+        request.getRequestDispatcher("../view/student/list.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

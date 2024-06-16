@@ -4,12 +4,14 @@
  */
 package dal;
 
+import model.Subject;
 import controller.student.list;
 import java.util.ArrayList;
 import model.Student;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Subject;
 
 /**
  *
@@ -66,7 +68,44 @@ public class StudentDBContext extends DBContext<Student> {
 
     @Override
     public Student get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement stm = null;
+        Student s = null;
+        
+        try {
+        String sql = "SELECT s.sid, s.sname, sub.subid, sub.subname\n" +
+                    "FROM  students s\n" +
+                    "JOIN students_courses sc ON s.sid = sc.sid\n" +
+                    "JOIN courses c ON sc.cid = c.cid\n" +
+                    "JOIN subjects sub ON c.subid = sub.subid\n" +
+                    "WHERE s.sid = ? \n" +
+                    "ORDER BY  s.sid, sub.subid;";
+        
+            
+            stm= connect.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                s = new Student();
+                s.setId(rs.getInt("sid"));
+                s.setName(rs.getString("sname"));
+            }
+            
+            
+            
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            try {
+                stm.close();
+                connect.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return s;
     }
    
     

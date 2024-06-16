@@ -9,10 +9,6 @@
         <servlet-class>controller.student.list</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>detail</servlet-name>
-        <servlet-class>controller.student.detail</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>create</servlet-name>
         <servlet-class>controller.student.create</servlet-class>
     </servlet>
@@ -24,6 +20,18 @@
         <servlet-name>update</servlet-name>
         <servlet-class>controller.student.update</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>filter</servlet-name>
+        <servlet-class>controller.student.filter</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>detail</servlet-name>
+        <servlet-class>controller.student.detail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sublist</servlet-name>
+        <servlet-class>controller.subject.list</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>caculate</servlet-name>
         <url-pattern>/calc</url-pattern>
@@ -31,10 +39,6 @@
     <servlet-mapping>
         <servlet-name>list</servlet-name>
         <url-pattern>/student/list</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>detail</servlet-name>
-        <url-pattern>/student/detail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>create</servlet-name>
@@ -47,5 +51,17 @@
     <servlet-mapping>
         <servlet-name>update</servlet-name>
         <url-pattern>/student/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>filter</servlet-name>
+        <url-pattern>/student/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>detail</servlet-name>
+        <url-pattern>/student/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sublist</servlet-name>
+        <url-pattern>/subject/list</url-pattern>
     </servlet-mapping>
 </web-app>

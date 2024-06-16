@@ -3,22 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.student;
+package controller.subject;
 
-import dal.StudentDBContext;
+import model.Subject;
+import dal.SubjectDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Student;
+import java.util.ArrayList;
 
 /**
  *
  * @author KEISHA
  */
-public class detail extends HttpServlet {
+public class list extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,11 +30,10 @@ public class detail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        StudentDBContext db = new StudentDBContext();
-        Student student = db.get(id);
-        request.setAttribute("e", student);
-        request.getRequestDispatcher("../view/student/detail.jsp").forward(request, response);
+        SubjectDBContext db = new SubjectDBContext();
+        ArrayList<Subject> sub = db.list();
+        request.setAttribute("s", sub);
+        request.getRequestDispatcher("../view/subject/list.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

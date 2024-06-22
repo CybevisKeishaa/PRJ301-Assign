@@ -10,10 +10,10 @@ import java.util.ArrayList;
  *
  * @author KEISHA
  */
-public class Lecture {
+public class Lecturer {
     private int id;
-    private String l_name;
-    private ArrayList<Subject> subs = new ArrayList();
+    private String name;
+    private ArrayList<Course> courses = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -23,21 +23,19 @@ public class Lecture {
         this.id = id;
     }
 
-    public String getL_name() {
-        return l_name;
+    public String getName() {
+        return name;
     }
 
-    public void setL_name(String l_name) {
-        this.l_name = l_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public ArrayList<Subject> getSubs() {
-        return subs;
+    public ArrayList<Course> getCourses() {
+        return courses;
     }
 
-    public void setSubs(ArrayList<Subject> subs) {
-        this.subs = subs;
+    public void setCourses(ArrayList<Course> courses) {
+        this.courses = courses;
     }
-    
-    
 }

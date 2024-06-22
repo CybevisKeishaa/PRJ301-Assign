@@ -9,7 +9,7 @@ package dal;
  *
  * @author KEISHA
  */
-    import java.sql.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +21,7 @@ public abstract class DBContext<T> {
         try {
             String user = "Keishaa";
             String pass = "123";
-            String url  = "jdbc:sqlserver://localhost\\\\SQLEXPRESS:1433;databaseName=Assignment_SU24;encrypt=true;trustservercertificate=true;";
+            String url  = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=Assignment_SU24;encrypt=true;trustservercertificate=true;";
             
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connect = DriverManager.getConnection(url, user, pass);

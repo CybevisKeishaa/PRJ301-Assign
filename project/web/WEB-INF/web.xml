@@ -8,6 +8,14 @@
         <servlet-name>ViewCourseByLecturerController</servlet-name>
         <servlet-class>controller.exam.ViewCourseByLecturerController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BaseRequireAuth</servlet-name>
+        <servlet-class>controller.auth.BaseRequireAuth</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>controller.auth.Login</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>caculate</servlet-name>
         <url-pattern>/calc</url-pattern>
@@ -15,5 +23,13 @@
     <servlet-mapping>
         <servlet-name>ViewCourseByLecturerController</servlet-name>
         <url-pattern>/exam/lecturer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BaseRequireAuth</servlet-name>
+        <url-pattern>/baseauth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 </web-app>

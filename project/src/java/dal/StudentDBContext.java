@@ -4,61 +4,48 @@
  */
 package dal;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import model.Student;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Course;
 
 /**
  *
  * @author KEISHA
  */
-public class CourseDBContext extends DBContext<Course>{
+public class StudentDBContext extends DBContext<Student> {
 
-
-    
-   
-
-    public ArrayList<Course> getCoursesByLecturer(int lid) {
-        ArrayList<Course> courses = new ArrayList<>();
+    public ArrayList<Student> getStudentsByCourse(int cid) {
+        ArrayList<Student> students = new ArrayList<>();
         PreparedStatement stm = null;
         try {
-            String sql = "SELECT c.cid,c.cname FROM courses c INNER JOIN lecturers l ON l.lid = c.lid\n"
-                    + "				INNER JOIN semester sem ON sem.semid = c.semid\n"
-                    + "				WHERE l.lid = ? AND sem.active = 1";
-            
-            
+            String sql = "SELECT s.sid,s.sname FROM students s INNER JOIN students_courses sc ON s.sid = sc.sid\n"
+                    + "						INNER JOIN courses c ON c.cid = sc.cid\n"
+                    + "						WHERE c.cid = ?";
+
             stm = connect.prepareStatement(sql);
-            stm.setInt(1, lid);
+            stm.setInt(1, cid);
             ResultSet rs = stm.executeQuery();
-            while(rs.next())
-            {
-                Course c = new Course();
-                c.setId(rs.getInt("cid"));
-                c.setName(rs.getString("cname"));
-                courses.add(c);
+            while (rs.next()) {
+                Student s = new Student();
+                s.setId(rs.getInt("sid"));
+                s.setName(rs.getString("sname"));
+                students.add(s);
             }
+
         } catch (SQLException ex) {
-            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
-        {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
             try {
                 stm.close();
                 connect.close();
             } catch (SQLException ex) {
-                Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return courses; 
-        
-        
+        return students;
     }
-    
-    
     
     
     @Override
@@ -77,13 +64,13 @@ public class CourseDBContext extends DBContext<Course>{
     }
 
     @Override
-    public Course get(int id) {
+    public Student get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public ArrayList<Course> list() {
+    public ArrayList<Student> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

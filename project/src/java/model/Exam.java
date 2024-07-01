@@ -14,7 +14,7 @@ import java.util.Date;
 public class Exam {
     private int id;
     private Date from;
-    private int duration;
+    private float duration;
     private Assessment assessment;
     private ArrayList<Grade> grades = new ArrayList<>();
 
@@ -43,11 +43,11 @@ public class Exam {
         this.from = from;
     }
 
-    public int getDuration() {
+    public float getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(float duration) {
         this.duration = duration;
     }
 

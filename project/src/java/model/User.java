@@ -15,16 +15,28 @@ public class User {
     private String username;
     private String password;
     private String displayname;
-    private ArrayList<Role> roles = new ArrayList<>();
+    private Lecturer lecturer;
+    private Student student;
 
-    public ArrayList<Role> getRoles() {
-        return roles;
+    public Lecturer getLecturer() {
+        return lecturer;
     }
 
-    public void setRoles(ArrayList<Role> roles) {
-        this.roles = roles;
+    public void setLecturer(Lecturer lecturer) {
+        this.lecturer = lecturer;
     }
 
+    
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    
     public String getUsername() {
         return username;
     }

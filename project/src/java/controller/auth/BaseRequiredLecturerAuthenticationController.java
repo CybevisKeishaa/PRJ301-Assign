@@ -4,34 +4,39 @@
  */
 package controller.auth;
 
-import dal.UserDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import model.Lecturer;
 import model.User;
 
 /**
  *
  * @author KEISHA
  */
-public class Login extends HttpServlet {
+public abstract class BaseRequiredLecturerAuthenticationController extends HttpServlet {
+   
+    private boolean isAuthenticated(HttpServletRequest request)
+    {
+        User user = (User)request.getSession().getAttribute("user");
+        if(user ==null)
+            return false;
+        else
+        {
+            Lecturer lecturer = user.getLecturer();
+            return lecturer != null;
+        }
+    }
+    
+    
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -39,13 +44,26 @@ public class Login extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-            request.getRequestDispatcher("view/auth/login.html").forward(request, response);
-    }
+    throws ServletException, IOException {
+        User user = (User)request.getSession().getAttribute("user");
+        if(isAuthenticated(request))
+        {
+            doGet(request, response, user, user.getLecturer());
+        }
+        else
+        {
+            response.getWriter().println("access denied!");
+        }
+    } 
+    
+    protected abstract void doGet(HttpServletRequest request, HttpServletResponse response,User user, Lecturer lecturer)
+    throws ServletException, IOException;
+    
+    protected abstract void doPost(HttpServletRequest request, HttpServletResponse response,User user, Lecturer lecturer)
+    throws ServletException, IOException;
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -53,23 +71,20 @@ public class Login extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        UserDBContext db = new UserDBContext();
-        User user = db.get(username, password);
-        if(user == null){
-            response.getWriter().println("Invalid user name or password");
-        }else{
-            request.getSession().setAttribute("user", user);
-            response.getWriter().println("Hello " +user.getDisplayname());
+    throws ServletException, IOException {
+        User user = (User)request.getSession().getAttribute("user");
+        if(isAuthenticated(request))
+        {
+            doPost(request, response, user, user.getLecturer());
+        }
+        else
+        {
+            response.getWriter().println("access denied!");
         }
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

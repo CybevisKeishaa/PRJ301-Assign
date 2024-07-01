@@ -4,63 +4,59 @@
  */
 package dal;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import model.Assessment;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Course;
+import model.Exam;
+import model.Subject;
 
 /**
  *
  * @author KEISHA
  */
-public class CourseDBContext extends DBContext<Course>{
+public class AssesmentDBContext extends DBContext<Assessment> {
 
-
-    
-   
-
-    public ArrayList<Course> getCoursesByLecturer(int lid) {
-        ArrayList<Course> courses = new ArrayList<>();
-        PreparedStatement stm = null;
-        try {
-            String sql = "SELECT c.cid,c.cname FROM courses c INNER JOIN lecturers l ON l.lid = c.lid\n"
-                    + "				INNER JOIN semester sem ON sem.semid = c.semid\n"
-                    + "				WHERE l.lid = ? AND sem.active = 1";
-            
-            
-            stm = connect.prepareStatement(sql);
-            stm.setInt(1, lid);
-            ResultSet rs = stm.executeQuery();
-            while(rs.next())
-            {
-                Course c = new Course();
-                c.setId(rs.getInt("cid"));
-                c.setName(rs.getString("cname"));
-                courses.add(c);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
-        {
-            try {
-                stm.close();
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return courses; 
-        
-        
+    public static void main(String[] args) {
+        AssesmentDBContext db = new AssesmentDBContext();
+        System.out.println(db.getAssesmentBySubject(1).size());
     }
-    
-    
-    
-    
+
+    public ArrayList<Assessment> getAssesmentBySubject(int subid) {
+        PreparedStatement stm = null;
+        ArrayList<Assessment> ass = new ArrayList<>();
+
+        try {
+
+            String sql = "SELECT \n"
+                    + "	 s.subid,\n"
+                    + "    s.subname, \n"
+                    + "    a.aname, \n"
+                    + "    a.weight\n"
+                    + "FROM \n"
+                    + "    subjects s\n"
+                    + "JOIN \n"
+                    + "    assesments a ON s.subid = a.subid\n"
+                    + "WHERE s.subid = ?";
+
+            stm = connect.prepareStatement(sql);
+            stm.setInt(1, subid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Assessment asses = new Assessment();
+                asses.setName(rs.getString("aname"));
+                asses.setWeight(rs.getFloat("weight"));
+                ass.add(asses);
+                
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AssesmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ass;
+    }
+
     @Override
     public void insert() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -77,13 +73,13 @@ public class CourseDBContext extends DBContext<Course>{
     }
 
     @Override
-    public Course get(int id) {
+    public Assessment get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public ArrayList<Course> list() {
+    public ArrayList<Assessment> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Feature;
+import model.Lecturer;
 import model.Role;
 
 /**
@@ -18,67 +19,44 @@ import model.Role;
  */
 public class UserDBContext extends DBContext<User> {
 
-    public User get(String username, String password) {
-        PreparedStatement stm = null;
+    public User getUserByUsernamePassword(String username, String password) {
+        PreparedStatement stm =null;
         User user = null;
-
         try {
-
-            String sql = "SELECT \n"
-                    + "    u.username,\n"
-                    + "    u.displayname,\n"
-                    + "    r.roleid,\n"
-                    + "    r.rolename,\n"
-                    + "    f.featureid,\n"
-                    + "    f.url\n"
-                    + "FROM lecturer_account u\n"
-                    + "LEFT JOIN account_roles ur ON u.username = ur.username\n"
-                    + "LEFT JOIN roles r ON r.roleid = ur.roleid\n"
-                    + "LEFT JOIN roles_features rf ON rf.roleid = r.roleid\n"
-                    + "LEFT JOIN features f ON f.featureid = rf.featureid\n"
-                    + "WHERE u.username = ? \n"
-                    + "  AND u.password = ?\n"
-                    + "ORDER BY u.username, r.roleid, f.featureid ASC;";
-
+            String sql = "SELECT u.username,u.displayname,l.lid,l.lname\n"
+                    + "FROM users u LEFT JOIN users_lecturers ul ON ul.username = u.username AND ul.active = 1\n"
+                    + "						LEFT JOIN lecturers l ON ul.lid = l.lid\n"
+                    + "						WHERE u.username = ? AND u.[password] = ?";
             stm = connect.prepareStatement(sql);
             stm.setString(1, username);
             stm.setString(2, password);
             ResultSet rs = stm.executeQuery();
-
-            Role r_role = new Role();
-            r_role.setId(-1);
-
-            while (rs.next()) {
-                if (user == null) {
-                    user = new User();
-                    user.setUsername(username);
-                    user.setDisplayname(rs.getString("displayname"));
-                }
-
-                int roleid = rs.getInt("roleid");
-                if (roleid != 0 && roleid != r_role.getId()) {
-                    r_role = new Role();
-                    r_role.setId(roleid);
-                    r_role.setName(rs.getString("rolename"));
-                    user.getRoles().add(r_role);
-
-                }
-                int featureid = rs.getInt("featureid");
-                if(featureid!=0)
+            if(rs.next())
+            {
+                user = new User();
+                user.setDisplayname(rs.getString("displayname"));
+                user.setUsername(username);
+                int lid = rs.getInt("lid");
+                if(lid!=0)
                 {
-                    Feature f = new Feature();
-                    f.setId(featureid);
-                    f.setUrl(rs.getString("url"));
-                    r_role.getFeatures().add(f);
+                   Lecturer lecturer = new Lecturer();
+                   lecturer.setId(lid);
+                   lecturer.setName(rs.getString("lname"));
+                   user.setLecturer(lecturer);
                 }
-                
-                
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        finally
+        {
+            try {
+                stm.close();
+                connect.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return user;
     }
 

@@ -1,35 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
-        <servlet-name>caculate</servlet-name>
-        <servlet-class>caculate</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ViewCourseByLecturerController</servlet-name>
         <servlet-class>controller.exam.ViewCourseByLecturerController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BaseRequireAuth</servlet-name>
-        <servlet-class>controller.auth.BaseRequireAuth</servlet-class>
+        <servlet-name>TakeExamController</servlet-name>
+        <servlet-class>controller.exam.TakeExamController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Login</servlet-name>
-        <servlet-class>controller.auth.Login</servlet-class>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>controller.auth.LoginController</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>caculate</servlet-name>
-        <url-pattern>/calc</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewCourseByLecturerController</servlet-name>
         <url-pattern>/exam/lecturer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BaseRequireAuth</servlet-name>
-        <url-pattern>/baseauth</url-pattern>
+        <servlet-name>TakeExamController</servlet-name>
+        <url-pattern>/exam/take</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Login</servlet-name>
+        <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 </web-app>

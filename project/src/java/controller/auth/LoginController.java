@@ -19,16 +19,15 @@ import model.User;
  */
 public class LoginController extends HttpServlet {
 
-    
-     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         request.getRequestDispatcher("view/auth/login.jsp").forward(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -36,26 +35,33 @@ public class LoginController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
+
         UserDBContext db = new UserDBContext();
         User user = db.getUserByUsernamePassword(username, password);
-        if(user !=null)
-        {
-            request.getSession().setAttribute("user", user);
-            response.getWriter().println("login successful: "+ user.getDisplayname());
-        }
-        else
-        {
+        
+        
+        if (user != null) {
+            if(user.getLecturer() != null){
+                request.getSession().setAttribute("user", user);
+                response.sendRedirect("view/lecture/lecturerHome.jsp");
+            }else if(user.getStudent() != null){
+                request.getSession().setAttribute("user", user);
+                response.sendRedirect("view/student/home.jsp");
+            }
+            
+            
+        } else {
             response.getWriter().println("login failed!");
         }
-        
+
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

@@ -18,27 +18,14 @@ import model.Subject;
  */
 public class AssesmentDBContext extends DBContext<Assessment> {
 
-    public static void main(String[] args) {
-        AssesmentDBContext db = new AssesmentDBContext();
-        System.out.println(db.getAssesmentBySubject(1).size());
-    }
-
     public ArrayList<Assessment> getAssesmentBySubject(int subid) {
         PreparedStatement stm = null;
         ArrayList<Assessment> ass = new ArrayList<>();
 
         try {
-
-            String sql = "SELECT \n"
-                    + "	 s.subid,\n"
-                    + "    s.subname, \n"
-                    + "    a.aname, \n"
-                    + "    a.weight\n"
-                    + "FROM \n"
-                    + "    subjects s\n"
-                    + "JOIN \n"
-                    + "    assesments a ON s.subid = a.subid\n"
-                    + "WHERE s.subid = ?";
+            String sql = "SELECT a.aname, a.weight, a.subid, e.duration FROM assesments a\n"
+                    + "INNER JOIN exams e on e.aid = a.aid\n"
+                    + "WHERE a.subid = ?";
 
             stm = connect.prepareStatement(sql);
             stm.setInt(1, subid);
@@ -47,12 +34,18 @@ public class AssesmentDBContext extends DBContext<Assessment> {
                 Assessment asses = new Assessment();
                 asses.setName(rs.getString("aname"));
                 asses.setWeight(rs.getFloat("weight"));
-                ass.add(asses);
-                
-            }
 
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AssesmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    Logger.getLogger(AssesmentDBContext.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
         }
         return ass;
     }
@@ -73,7 +66,8 @@ public class AssesmentDBContext extends DBContext<Assessment> {
     }
 
     @Override
-    public Assessment get(int id) {
+    public Assessment get(int id
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

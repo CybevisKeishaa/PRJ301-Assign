@@ -16,6 +16,14 @@
         <servlet-name>BaseRequiredStudent</servlet-name>
         <servlet-class>controller.auth.BaseRequiredStudent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>subjectList</servlet-name>
+        <servlet-class>controller.subject.SubjectInfomation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubjectDetail</servlet-name>
+        <servlet-class>controller.subject.SubjectDetail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ViewCourseByLecturerController</servlet-name>
         <url-pattern>/exam/lecturer</url-pattern>
@@ -31,5 +39,13 @@
     <servlet-mapping>
         <servlet-name>BaseRequiredStudent</servlet-name>
         <url-pattern>/BaseRequiredStudent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>subjectList</servlet-name>
+        <url-pattern>/subject/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubjectDetail</servlet-name>
+        <url-pattern>/subject/detail</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -14,6 +14,7 @@
     </head>
     <body> 
         <h1> Hi student ${sessionScope.user.displayname}</h1>
-
+        
+        <a href="../../subject/list"> FLM FPT</a>
     </body>
 </html>

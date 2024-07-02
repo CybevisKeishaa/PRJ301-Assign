@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Course;
 import model.Exam;
 import model.Grade;
 import model.Student;
@@ -20,6 +21,7 @@ import model.Student;
  */
 public class GradeDBContext extends DBContext<Grade> {
 
+    
     public ArrayList<Grade> getGradesFromExamIds(ArrayList<Integer> eids) {
         ArrayList<Grade> grades = new ArrayList<>();
         PreparedStatement stm = null;
@@ -74,20 +76,20 @@ public class GradeDBContext extends DBContext<Grade> {
                 + "           (?\n"
                 + "           ,?\n"
                 + "           ,?)";
-        
-        PreparedStatement stm_remove =null;
+
+        PreparedStatement stm_remove = null;
         ArrayList<PreparedStatement> stm_inserts = new ArrayList<>();
-        
+
         try {
             connect.setAutoCommit(false);
             stm_remove = connect.prepareStatement(sql_remove);
             stm_remove.setInt(1, cid);
             stm_remove.executeUpdate();
-            
+
             for (Grade grade : grades) {
                 PreparedStatement stm_insert = connect.prepareStatement(sql_insert);
                 stm_insert.setInt(1, grade.getExam().getId());
-                stm_insert.setInt(2,grade.getStudent().getId());
+                stm_insert.setInt(2, grade.getStudent().getId());
                 stm_insert.setFloat(3, grade.getScore());
                 stm_insert.executeUpdate();
                 stm_inserts.add(stm_insert);
@@ -100,9 +102,7 @@ public class GradeDBContext extends DBContext<Grade> {
             } catch (SQLException ex1) {
                 Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex1);
             }
-        }
-        finally
-        {
+        } finally {
             try {
                 connect.setAutoCommit(true);
                 stm_remove.close();
@@ -114,7 +114,50 @@ public class GradeDBContext extends DBContext<Grade> {
                 Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
+    }
+
+    public ArrayList<Grade> getGradeByStudentID(int stdID) {
+        ArrayList<Grade> grades = new ArrayList<>();
         
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT st.sid, st.sname, s.subid, c.cid, c.cname, AVG(g.score) AS Average "
+                    + "FROM students st "
+                    + "LEFT JOIN students_courses sc ON st.sid = sc.sid "
+                    + "LEFT JOIN courses c ON sc.cid = c.cid "
+                    + "LEFT JOIN subjects s ON c.subid = s.subid "
+                    + "LEFT JOIN exams e ON e.aid IN (SELECT a.aid FROM assesments a WHERE a.subid = s.subid) "
+                    + "LEFT JOIN grades g ON g.eid = e.eid AND g.sid = st.sid "
+                    + "WHERE st.sid = ? "
+                    + "GROUP BY st.sid, st.sname, s.subid, c.cid, c.cname";
+            stm = connect.prepareStatement(sql);
+            stm.setInt(1, stdID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                 Grade g = new Grade();
+            g.setScore(rs.getFloat("Average"));
+
+            Student s = new Student();
+            s.setId(rs.getInt("sid"));
+            s.setName(rs.getString("sname"));
+
+            Course c = new Course();
+            c.setId(rs.getInt("cid"));
+            c.setName(rs.getString("cname"));
+            
+            ArrayList<Course> courses = new ArrayList<>();
+            courses.add(c);
+            s.setCourses(courses);
+
+            g.setStudent(s);
+            grades.add(g);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return grades;
     }
 
     @Override

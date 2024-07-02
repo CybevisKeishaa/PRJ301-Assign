@@ -24,6 +24,10 @@
         <servlet-name>SubjectDetail</servlet-name>
         <servlet-class>controller.subject.SubjectDetail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StudentStatus</servlet-name>
+        <servlet-class>controller.status.StudentStatus</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ViewCourseByLecturerController</servlet-name>
         <url-pattern>/exam/lecturer</url-pattern>
@@ -47,5 +51,9 @@
     <servlet-mapping>
         <servlet-name>SubjectDetail</servlet-name>
         <url-pattern>/subject/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentStatus</servlet-name>
+        <url-pattern>/student/status</url-pattern>
     </servlet-mapping>
 </web-app>

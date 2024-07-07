@@ -13,8 +13,10 @@
             <th>SUBJECT</th>
             <th>GRADE</th>
             <th>STATUS</th>
+            <th>      </th>
         </tr>
         <c:forEach items="${grades}" var="g">
+            
             <tr>
                 <td>${g.student.courses[0].name}</td>
                 <td>${g.score}</td>
@@ -31,6 +33,8 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
+                <td> <a href="mark?cid=${g.student.courses[0].id}">   MORE </a></td>
+                
             </tr>
         </c:forEach>
     </table>

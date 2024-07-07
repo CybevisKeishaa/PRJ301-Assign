@@ -17,6 +17,6 @@
         
         <a href="../../subject/list"> FLM FPT</a> <br/>
         
-        <a href="../../student/status"> VIEW SCORE</a>
+        <a href="../../student/status"> ACADEMIC TRANSCRIPT</a>
     </body>
 </html>

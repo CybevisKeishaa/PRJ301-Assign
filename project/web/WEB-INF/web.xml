@@ -32,6 +32,10 @@
         <servlet-name>MarkReport</servlet-name>
         <servlet-class>controller.status.MarkReport</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StudentListServlet</servlet-name>
+        <servlet-class>controller.exam.StudentListServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ViewCourseByLecturerController</servlet-name>
         <url-pattern>/exam/lecturer</url-pattern>
@@ -63,5 +67,9 @@
     <servlet-mapping>
         <servlet-name>MarkReport</servlet-name>
         <url-pattern>/student/mark</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentListServlet</servlet-name>
+        <url-pattern>/course/list</url-pattern>
     </servlet-mapping>
 </web-app>

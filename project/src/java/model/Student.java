@@ -13,6 +13,15 @@ import java.util.ArrayList;
 public class Student {
     private int id;
     private String name;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
     private ArrayList<Course> courses = new ArrayList<>();
 
     public int getId() {

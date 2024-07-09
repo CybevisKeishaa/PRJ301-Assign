@@ -20,9 +20,9 @@ public class StudentDBContext extends DBContext<Student> {
         ArrayList<Student> students = new ArrayList<>();
         PreparedStatement stm = null;
         try {
-            String sql = "SELECT s.sid,s.sname FROM students s INNER JOIN students_courses sc ON s.sid = sc.sid\n"
-                    + "						INNER JOIN courses c ON c.cid = sc.cid\n"
-                    + "						WHERE c.cid = ?";
+            String sql = "SELECT s.sid,s.sname,s.avatar FROM students s INNER JOIN students_courses sc ON s.sid = sc.sid\n"
+                    + "                   						INNER JOIN courses c ON c.cid = sc.cid\n"
+                    + "                  					WHERE c.cid = ?";
 
             stm = connect.prepareStatement(sql);
             stm.setInt(1, cid);
@@ -31,6 +31,7 @@ public class StudentDBContext extends DBContext<Student> {
                 Student s = new Student();
                 s.setId(rs.getInt("sid"));
                 s.setName(rs.getString("sname"));
+                s.setAvatar(rs.getString("avatar"));
                 students.add(s);
             }
 
@@ -46,8 +47,7 @@ public class StudentDBContext extends DBContext<Student> {
         }
         return students;
     }
-    
-    
+
     @Override
     public void insert() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

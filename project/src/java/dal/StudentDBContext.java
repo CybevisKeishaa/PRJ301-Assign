@@ -21,8 +21,8 @@ public class StudentDBContext extends DBContext<Student> {
         PreparedStatement stm = null;
         try {
             String sql = "SELECT s.sid,s.sname,s.avatar FROM students s INNER JOIN students_courses sc ON s.sid = sc.sid\n"
-                    + "                   						INNER JOIN courses c ON c.cid = sc.cid\n"
-                    + "                  					WHERE c.cid = ?";
+                    + "           INNER JOIN courses c ON c.cid = sc.cid\n"
+                    + "         WHERE c.cid = ?";
 
             stm = connect.prepareStatement(sql);
             stm.setInt(1, cid);

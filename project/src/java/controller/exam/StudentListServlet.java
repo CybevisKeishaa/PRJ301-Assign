@@ -5,6 +5,7 @@
 
 package controller.exam;
 
+import controller.auth.BaseRequiredLecturerAuthenticationController;
 import dal.StudentDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,13 +14,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import model.Lecturer;
 import model.Student;
+import model.User;
 
 /**
  *
  * @author KEISHA
  */
-public class StudentListServlet extends HttpServlet {
+public class StudentListServlet extends BaseRequiredLecturerAuthenticationController {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -28,18 +31,7 @@ public class StudentListServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            int cid = Integer.parseInt(request.getParameter("cid"));
-            StudentDBContext db = new StudentDBContext();
-            ArrayList<Student> students = db.getStudentsByCourse(cid);
-            
-            request.setAttribute("students", students);
-            request.getRequestDispatcher("../view/course/list.jsp").forward(request, response);
-        }
-    } 
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -50,9 +42,9 @@ public class StudentListServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, User user, Lecturer lecturer)
     throws ServletException, IOException {
-        processRequest(request, response);
+            
     } 
 
     /** 
@@ -63,9 +55,14 @@ public class StudentListServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, User user, Lecturer lecturer)
     throws ServletException, IOException {
-        processRequest(request, response);
+       int cid = Integer.parseInt(request.getParameter("cid"));
+            StudentDBContext db = new StudentDBContext();
+            ArrayList<Student> students = db.getStudentsByCourse(cid);
+            
+            request.setAttribute("students", students);
+            request.getRequestDispatcher("../view/course/list.jsp").forward(request, response);
     }
 
     /** 

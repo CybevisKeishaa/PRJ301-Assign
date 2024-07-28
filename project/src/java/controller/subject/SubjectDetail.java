@@ -6,65 +6,47 @@
 package controller.subject;
 
 import dal.ExamDBContext;
+import dal.SubjectDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import model.Exam;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import model.Exam;
+import model.Subject;
 
 /**
  *
  * @author KEISHA
  */
-public class SubjectDetail extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-   
+public class SubjectDetail extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int subid = Integer.parseInt(request.getParameter("subid"));
         ExamDBContext db = new ExamDBContext();
         ArrayList<Exam> exams = db.getExamBySubID(subid);
+
+        SubjectDBContext subDb = new SubjectDBContext();
+        ArrayList<Subject> subs = subDb.list();
         
         request.setAttribute("exams", exams);
-        request.getRequestDispatcher("../view/subject/detail.jsp").forward(request, response);
-        
-    } 
+        request.setAttribute("subs", subs);
+        request.getRequestDispatcher("../view/subject/list.jsp").forward(request, response);
+    }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
-        
+        doGet(request, response); // Handle POST requests same as GET
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }
+

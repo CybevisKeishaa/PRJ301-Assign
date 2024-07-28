@@ -27,12 +27,23 @@ public class StudentStatus extends BaseRequiredStudent {
     protected void doGet(HttpServletRequest request, HttpServletResponse response, User user, Student student)
             throws ServletException, IOException {
         GradeDBContext db = new GradeDBContext();
+
         int sid = student.getId();
         String name = student.getName();
-        ArrayList<Grade> grades = db.getGradeByStudentID(sid);
+        String cidParam = request.getParameter("cid");
 
+        // Lấy danh sách điểm tổng quát
+        ArrayList<Grade> grades = db.getGradeByStudentID(sid);
         request.setAttribute("grades", grades);
         request.setAttribute("name", name);
+
+        if (cidParam != null) {
+            // Lấy danh sách điểm chi tiết nếu có cid
+            int cid = Integer.parseInt(cidParam);
+            ArrayList<Grade> details = db.getGradeByCidAndSid(cid, sid);
+            request.setAttribute("details", details);
+        }
+
         request.getRequestDispatcher("../view/student/status.jsp").forward(request, response);
 
     }
@@ -48,7 +59,24 @@ public class StudentStatus extends BaseRequiredStudent {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, User user, Student student)
             throws ServletException, IOException {
+        GradeDBContext db = new GradeDBContext();
+        int sid = student.getId();
+        String name = student.getName();
+        String cidParam = request.getParameter("cid");
 
+        // Lấy danh sách điểm tổng quát
+        ArrayList<Grade> grades = db.getGradeByStudentID(sid);
+        request.setAttribute("grades", grades);
+        request.setAttribute("name", name);
+
+        if (cidParam != null) {
+            // Lấy danh sách điểm chi tiết nếu có cid
+            int cid = Integer.parseInt(cidParam);
+            ArrayList<Grade> details = db.getGradeByCidAndSid(cid, sid);
+            request.setAttribute("details", details);
+        }
+
+        request.getRequestDispatcher("../view/student/status.jsp").forward(request, response);
     }
 
     /**

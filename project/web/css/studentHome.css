@@ -1,0 +1,63 @@
+html, body {
+    background-color: #1E1E1E;
+    color: #ffffff;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding-top: 56px; /* Height of the navbar */
+}
+
+.navbar-brand {
+    color: #ff5e5e !important;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ff5e5e !important;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 56px); /* Full height minus the navbar height */
+    text-align: center;
+    color: #ffffff; /* Ensure the text color is white */
+}
+
+h1 {
+    color: #ffffff !important; /* Ensure the heading color is white */
+}
+
+a {
+    color: #ffffff !important;
+    text-decoration: none;
+    margin: 10px 0;
+}
+
+a:hover {
+    color: #ff5e5e !important;
+    text-decoration: underline;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff5e5e;
+    color: #ffffff !important;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #ff7575;
+}

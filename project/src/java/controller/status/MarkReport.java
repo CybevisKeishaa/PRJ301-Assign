@@ -20,6 +20,8 @@ import model.Grade;
 import model.Student;
 import model.User;
 
+
+
 /**
  *
  * @author KEISHA
@@ -51,8 +53,8 @@ public class MarkReport extends BaseRequiredStudent {
         GradeDBContext db = new GradeDBContext();
         ArrayList<Grade> grades = db.getGradeByCidAndSid(cid, sid);
         
-        request.setAttribute("grades", grades);
-        request.getRequestDispatcher("../view/student/mark.jsp").forward(request, response);
+        request.setAttribute("marks", grades);
+        response.sendRedirect("../view/student/status.jsp");
         
     } 
 
@@ -66,13 +68,13 @@ public class MarkReport extends BaseRequiredStudent {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, User user, Student student)
     throws ServletException, IOException {
-        int cid = Integer.parseInt(request.getParameter("course"));
-        int sid = student.getId();
-        GradeDBContext db = new GradeDBContext();
-        ArrayList<Grade> grades = db.getGradeByCidAndSid(cid, sid);
-        
-        request.setAttribute("grades", grades);
-        request.getRequestDispatcher("../view/student/mark.jsp").forward(request, response);
+//        int cid = Integer.parseInt(request.getParameter("cid"));
+//        int sid = student.getId();
+//        GradeDBContext db = new GradeDBContext();
+//        ArrayList<Grade> grades = db.getGradeByCidAndSid(cid, sid);
+//        
+//        request.setAttribute("grades", grades);
+//        request.getRequestDispatcher("../view/student/mark.jsp").forward(request, response);
         
         
     }
@@ -87,3 +89,5 @@ public class MarkReport extends BaseRequiredStudent {
     }// </editor-fold>
 
 }
+
+

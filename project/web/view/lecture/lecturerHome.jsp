@@ -28,6 +28,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="../../exam/lecturer">Update Score</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../../exam/statistics">Statistics</a>
+                </li>
             </ul>
         </div>
     </nav>

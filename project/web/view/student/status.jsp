@@ -28,7 +28,7 @@
                     <a class="nav-link" href="../view/student/home.jsp">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../subject/list">ACADEMIC TRANSCRIPT</a>
+                    <a class="nav-link" href="../subject/list">FLM FPT</a>
                 </li>
             </ul>
         </div>

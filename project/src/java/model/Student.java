@@ -11,9 +11,11 @@ import java.util.ArrayList;
  * @author KEISHA
  */
 public class Student {
+
     private int id;
     private String name;
     private String avatar;
+    private ArrayList<Course> courses = new ArrayList<>();
 
     public String getAvatar() {
         return avatar;
@@ -22,7 +24,6 @@ public class Student {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-    private ArrayList<Course> courses = new ArrayList<>();
 
     public int getId() {
         return id;

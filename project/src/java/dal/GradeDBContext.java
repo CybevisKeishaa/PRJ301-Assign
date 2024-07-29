@@ -205,6 +205,55 @@ public class GradeDBContext extends DBContext<Grade> {
         return grades;
     }
 
+    public ArrayList<Grade> getGradesByCourses(ArrayList<Course> courses) {
+        ArrayList<Grade> grades = new ArrayList<>();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+
+            for (Course course : courses) {
+                String sql = "SELECT s.sid, s.sname, c.cid, c.cname, AVG(g.score) AS average_score "
+                        + "FROM students s "
+                        + "INNER JOIN students_courses sc ON s.sid = sc.sid "
+                        + "INNER JOIN courses c ON sc.cid = c.cid "
+                        + "INNER JOIN assesments a ON c.subid = a.subid "
+                        + "INNER JOIN exams e ON a.aid = e.aid "
+                        + "INNER JOIN grades g ON e.eid = g.eid AND s.sid = g.sid "
+                        + "WHERE c.cid = ? "
+                        + "GROUP BY s.sid, s.sname, c.cid, c.cname";
+                stm = connect.prepareStatement(sql);
+                stm.setInt(1, course.getId());
+                rs = stm.executeQuery();
+
+                while (rs.next()) {
+                    Grade grade = new Grade();
+                    grade.setScore(rs.getFloat("average_score"));
+
+                    ArrayList<Course> cs = new ArrayList<>();
+                    Course c = new Course();
+                    c.setId(rs.getInt("cid"));
+                    c.setName(rs.getString("cname"));
+                    cs.add(c);
+
+                    Student student = new Student();
+                    student.setId(rs.getInt("sid"));
+                    student.setName(rs.getString("sname"));
+                    student.setCourses(cs);
+
+                    grade.setStudent(student);
+                    grades.add(grade);
+                }
+                rs.close();
+                stm.close();
+            }
+            connect.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return grades;
+    }
+
     @Override
     public void insert() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

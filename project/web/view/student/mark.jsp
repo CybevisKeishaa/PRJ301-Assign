@@ -2,7 +2,7 @@
     Document   : mark
     Created on : Jul 7, 2024, 4:16:10 PM
     Author     : KEISHA
---%>
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -56,3 +56,4 @@
         
     </body>
 </html>
+--%>

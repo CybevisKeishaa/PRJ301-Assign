@@ -11,14 +11,14 @@
 <body class="bg-dark text-white">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="#">TAKE STUDENT GRADE</a>
+        <a class="navbar-brand" href="#">Hi lecturer, ${sessionScope.user.displayname}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="../view/lecture/lecturerHome.jsp">HOME</a>
+                    <a class="nav-link" href="../view/lecture/lecturerHome.jsp">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../exam/statistics">Statistics</a>
@@ -29,6 +29,7 @@
 
     
     <div class="container mt-5 pt-5">
+        <h1 class="text-center">SELECT COURSE TO TAKE GRADES</h1>
         <c:if test="${requestScope.exams eq null}">
             <c:if test="${requestScope.courses.size() > 0}">
                 <form id="courseForm" method="POST" class="mt-4">

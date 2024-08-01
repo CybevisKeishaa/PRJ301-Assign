@@ -19,17 +19,10 @@
                 <i class="fas fa-lock"></i>
                 <input type="password" id="password" name="password" class="form-control" placeholder="Password"/>
             </div>
-            <div class="form-group remember-me">
-                <label>
-                    <input type="checkbox" name="remember" /> Remember me
-                </label>
-                <a href="#">Forgot Password?</a>
-            </div>
+            
             <input type="submit" value="Login" class="btn-submit"/>
         </form>
-        <div class="footer">
-            Don't have an account? <a href="#">Register</a>
-        </div>
+        
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
